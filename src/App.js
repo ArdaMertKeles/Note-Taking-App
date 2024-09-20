@@ -1,23 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import './style/style.css'
+import SideBar from './components/SideBar';
+import Note from './components/Note';
 
 function App() {
+
+  const [selectedColor, setSelectedColor] = useState('gold')
+  const [selectedWidthRange, setSelectedWidthRange] = useState(100)
+  const [selectedHeightRange, setSelectedHeightRange] = useState(100)
+  const [selectedTitle, setSelectedTitle] = useState('')
+  const [selectedSubject, setSelectedSubject] = useState('')
+  const [notes, setNotes] = useState([])
+
+  const createNote = () => {
+    if (selectedSubject !== '' && selectedTitle !== '') {
+      notes.push({
+        title: selectedTitle,
+        subject: selectedSubject,
+        width: parseInt(selectedWidthRange),
+        height: parseInt(selectedHeightRange),
+        color: selectedColor
+      })
+      setSelectedTitle('')
+      setSelectedSubject('')
+    } else {
+      alert("You can't leave fields blank")
+    }
+  }
+
+  const deleteNote = (key) => {
+    const newNotes = notes.filter((item, index) => index !== key);
+    setNotes(newNotes);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="mainWrapper">
+      <SideBar createNote={createNote} selectedTitle={selectedTitle} selectedSubject={selectedSubject} setSelectedColor={setSelectedColor} setSelectedTitle={setSelectedTitle} setSelectedSubject={setSelectedSubject} selectedWidthRange={selectedWidthRange} selectedHeightRange={selectedHeightRange} setSelectedHeightRange={setSelectedHeightRange} setSelectedWidthRange={setSelectedWidthRange} />
+      <div className='noteSide'>
+        {notes && notes.map((note, key) => (
+          <Note deleteNote={() => deleteNote(key)} key={key} title={note.title} subject={note.subject} width={note.width} height={note.height} color={note.color} />
+        ))}
+      </div>
     </div>
   );
 }
