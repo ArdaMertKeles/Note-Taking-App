@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 
-export default function SideBar({createNote, selectedTitle, selectedSubject, setSelectedTitle, setSelectedSubject, setSelectedColor, selectedWidthRange, setSelectedWidthRange, selectedHeightRange, setSelectedHeightRange}) {
-
+export default function SideBar({subjectAlert, titleAlert, createNote, selectedTitle, selectedSubject, setSelectedTitle, setSelectedSubject, setSelectedColor, selectedWidthRange, setSelectedWidthRange, selectedHeightRange, setSelectedHeightRange}) {
 
     const colorPicker = (e) => {
         setSelectedColor(e.target.id)
@@ -26,9 +25,11 @@ export default function SideBar({createNote, selectedTitle, selectedSubject, set
             </div>
             <div className="titleCreator">
                 <input onChange={(e) => titleCatcher(e)} placeholder="Write your title here." value={selectedTitle} type="text" id="title" />
-            </div>
+                <p className="alert" style={{display: titleAlert}}>You cant leave this field blank.</p>
+                </div>
             <div className="subjectCreator">
                 <textarea onChange={(e) => subjectCatcher(e)} value={selectedSubject} placeholder="Write your subject here." name="subject" className="subject" id="subject"></textarea>
+                <p className="alert" style={{display: subjectAlert}}>You cant leave this field blank.</p>
             </div>
             <div className="ranges">
                 <div className="widthRange">

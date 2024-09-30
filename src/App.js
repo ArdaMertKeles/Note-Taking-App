@@ -11,6 +11,8 @@ function App() {
   const [selectedTitle, setSelectedTitle] = useState('')
   const [selectedSubject, setSelectedSubject] = useState('')
   const [notes, setNotes] = useState([])
+  const [subjectAlert, setSubjectAlert] = useState('none')
+  const [titleAlert, setTitleAlert] = useState('none')
 
   const createNote = () => {
     if (selectedSubject !== '' && selectedTitle !== '') {
@@ -24,7 +26,24 @@ function App() {
       setSelectedTitle('')
       setSelectedSubject('')
     } else {
-      alert("You can't leave fields blank")
+      if(selectedTitle === '' && selectedSubject === ''){
+        setTitleAlert('flex')
+        setSubjectAlert('flex')
+        setTimeout(() => {
+          setTitleAlert('none')
+          setSubjectAlert('none')
+        }, 3000);
+      }else if(selectedTitle === ''){
+        setTitleAlert('flex')
+        setTimeout(() => {
+          setTitleAlert('none')
+        }, 3000);
+      }else if(selectedSubject === ''){
+        setSubjectAlert('flex')
+        setTimeout(() => {
+          setSubjectAlert('none')
+        }, 3000);
+      }
     }
   }
 
@@ -35,7 +54,7 @@ function App() {
 
   return (
     <div className="mainWrapper">
-      <SideBar createNote={createNote} selectedTitle={selectedTitle} selectedSubject={selectedSubject} setSelectedColor={setSelectedColor} setSelectedTitle={setSelectedTitle} setSelectedSubject={setSelectedSubject} selectedWidthRange={selectedWidthRange} selectedHeightRange={selectedHeightRange} setSelectedHeightRange={setSelectedHeightRange} setSelectedWidthRange={setSelectedWidthRange} />
+      <SideBar subjectAlert={subjectAlert} titleAlert={titleAlert} createNote={createNote} selectedTitle={selectedTitle} selectedSubject={selectedSubject} setSelectedColor={setSelectedColor} setSelectedTitle={setSelectedTitle} setSelectedSubject={setSelectedSubject} selectedWidthRange={selectedWidthRange} selectedHeightRange={selectedHeightRange} setSelectedHeightRange={setSelectedHeightRange} setSelectedWidthRange={setSelectedWidthRange} />
       <div className='noteSide'>
         {notes && notes.map((note, key) => (
           <Note deleteNote={() => deleteNote(key)} key={key} title={note.title} subject={note.subject} width={note.width} height={note.height} color={note.color} />
