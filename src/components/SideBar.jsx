@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 export default function SideBar({subjectAlert, titleAlert, createNote, selectedTitle, selectedSubject, setSelectedTitle, setSelectedSubject, setSelectedColor, selectedWidthRange, setSelectedWidthRange, selectedHeightRange, setSelectedHeightRange}) {
 
